@@ -1,0 +1,33 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {% if not title %}
+        Encyclopedia - New Wiki Page
+    {% else %}
+        Encyclopedia - Edit Wiki Page
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% if not title %}
+        <form action="{% url 'new' %}" method="POST" class="editor-form" >
+            <h1>Create New Page (Markdown)</h1>
+            {% csrf_token %}
+            <textarea name="content" id="content"></textarea>
+            <div class="row page-editor-footer">
+                <input type="text" name="title" placeholder="Choose a title">
+                <input type="submit" name="submit" value="Create new Wiki">
+            </div>
+        </form>
+    {% else %}
+        <form action="{% url 'edit' title=title %}" method="POST" class="editor-form" >
+            <h1>Edit Page (Markdown)</h1>
+            {% csrf_token %}
+            <textarea name="content" id="content">{{md_page}}</textarea>
+            <div class="row page-editor-footer">
+                <input type="text" readonly name="title" value="{{title}}" class="disabled-input" >
+                <input type="submit" name="submit" value="Save Wiki">
+            </div>
+        </form>
+    {% endif %}
+{% endblock %}

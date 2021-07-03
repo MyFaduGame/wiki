@@ -1,0 +1,1 @@
+This is just an sample page which just displays hello world to all the users.
